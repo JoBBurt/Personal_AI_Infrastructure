@@ -66,3 +66,17 @@ credentials/
 .claude/pai_updates/
 .claude/pai_backups/
 .claude/.pai-sync-history
+
+# Claude Code local runtime files (not versioned)
+.claude/debug/
+.claude/file-history/
+.claude/history.jsonl
+.claude/plans/
+.claude/projects/
+.claude/session-env/
+.claude/shell-snapshots/
+.claude/statsig/
+.claude/todos/
+.claude/.update.lock
+.claude/settings.local.json
+.claude/config/

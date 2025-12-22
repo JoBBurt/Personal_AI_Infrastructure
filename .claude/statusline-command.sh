@@ -39,6 +39,13 @@ cc_version=$(echo "$input" | jq -r '.version // "unknown"')
 # Get directory name
 dir_name=$(basename "$current_dir")
 
+# Get git branch information (skip optional locks for performance)
+git_branch=""
+if [ -d "$current_dir/.git" ]; then
+    # Get current branch name - use symbolic-ref for speed, fallback to rev-parse for detached HEAD
+    git_branch=$(cd "$current_dir" && git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+fi
+
 # Cache file and lock file for ccusage data
 CACHE_FILE="/tmp/.claude_ccusage_cache"
 LOCK_FILE="/tmp/.claude_ccusage.lock"
@@ -282,8 +289,12 @@ for mcp in $mcp_names_raw; do
 done
 
 # Output the full 3-line statusline
-# LINE 1 - Greeting with CC version
-printf "👋 ${DA_DISPLAY_COLOR}\"${DA_NAME} here, ready to go...\"${RESET} ${MODEL_PURPLE}Running CC ${cc_version}${RESET}${LINE1_PRIMARY} with ${MODEL_PURPLE}🧠 ${model_name}${RESET}${LINE1_PRIMARY} in ${DIR_COLOR}📁 ${dir_name}${RESET}\n"
+# LINE 1 - Greeting with CC version and git branch
+if [ -n "$git_branch" ]; then
+    printf "👋 ${DA_DISPLAY_COLOR}\"${DA_NAME} here, ready to go...\"${RESET} ${MODEL_PURPLE}Running CC ${cc_version}${RESET}${LINE1_PRIMARY} with ${MODEL_PURPLE}🧠 ${model_name}${RESET}${LINE1_PRIMARY} in ${DIR_COLOR}📁 ${dir_name}${RESET} ${LINE1_ACCENT}on${RESET} ${BRIGHT_CYAN}🌿 ${git_branch}${RESET}\n"
+else
+    printf "👋 ${DA_DISPLAY_COLOR}\"${DA_NAME} here, ready to go...\"${RESET} ${MODEL_PURPLE}Running CC ${cc_version}${RESET}${LINE1_PRIMARY} with ${MODEL_PURPLE}🧠 ${model_name}${RESET}${LINE1_PRIMARY} in ${DIR_COLOR}📁 ${dir_name}${RESET}\n"
+fi
 
 # LINE 2 - BLUE theme with MCP names and Fabric patterns
 if [ "$fabric_count" -gt 0 ]; then
