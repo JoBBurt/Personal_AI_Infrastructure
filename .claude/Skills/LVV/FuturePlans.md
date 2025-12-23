@@ -4,59 +4,7 @@ Deferred improvements for future implementation.
 
 ---
 
-## 1. Quick Web Enrichment for Prescreen
-
-**Problem:** Prescreens for entities with sparse descriptions (<100 chars) lack context for accurate scoring.
-
-**Solution:** Optional lightweight web fetch before prescreen to enrich entity context.
-
-### Implementation
-
-**File: `lvv/evaluation/service.py`**
-
-Add enrichment option to prescreen function:
-
-```python
-async def run_prescreen(entity_id: int, enrich: bool = False):
-    entity = get_entity(entity_id)
-
-    if enrich and entity.website and len(entity.description or '') < 100:
-        # Fetch homepage, extract company description
-        web_data = await fetch_and_extract(entity.website)
-        # Create enriched context for evaluation
-        enriched_description = f"{entity.description or ''}\n\nFrom website:\n{web_data}"
-        # Pass to evaluation
-```
-
-**File: `lvv/cli/screen.py`**
-
-Add CLI flag:
-
-```python
-@click.option('--enrich', is_flag=True, help='Fetch website for sparse entities')
-def prescreen(entity_id: int, enrich: bool):
-    ...
-```
-
-**Usage:**
-```bash
-lvv screen prescreen <id> --enrich
-```
-
-### Considerations
-
-- Rate limiting for web fetches
-- Timeout handling (slow/unresponsive sites)
-- Cache fetched content to avoid repeated requests
-- Cost: Adds ~1-2s latency per enriched entity
-
-### Effort
-
-~2-3 hours Python development + testing
-
----
-
-## 2. Dashboard Visualization
+## 1. Dashboard Visualization
 
 **Problem:** No visual interface for conference prep status, entity browsing, or batch monitoring.
 
@@ -150,8 +98,7 @@ Significant - estimated 2-3 weeks following Observability patterns:
 
 ## Priority Order
 
-1. **Quick Web Enrichment** - Small effort, immediate value for sparse entities
-2. **Dashboard Visualization** - Large effort, high value for conference prep workflow
+1. **Dashboard Visualization** - Large effort, high value for conference prep workflow
 
 ---
 
@@ -170,6 +117,28 @@ Generated 5 hand-drawn style diagrams using Art skill with Gemini nano-banana-pr
 | Scoring Dimensions | `diagrams/scoring-dimensions.png` |
 
 Documentation updated with image references in SKILL.md, EntityScreening.md, ConferencePrep.md, DatabaseSchema.md, and ScoringDimensions.md.
+
+### Web Enrichment via lvv-researcher Agent (Completed 2025-12-22)
+
+Implemented agent-based web enrichment for sparse entity descriptions:
+
+| Component | File |
+|-----------|------|
+| Agent Definition | `~/.claude/Agents/LvvResearcher.md` |
+| Workflow Integration | `workflows/EntityScreening.md` Step 1.5 |
+| Skill Routing | `SKILL.md` Agent Integration section |
+
+**Features:**
+- Automatic enrichment for entities with <100 char descriptions
+- Parallel research delegation to claude/perplexity/gemini researchers
+- Dimension-organized context aligned to LVV scoring criteria
+- 2-minute timeout for fast pre-screening
+- Context-only (no database modifications)
+
+**Usage:** Automatic during EntityScreening workflow, or manual:
+```
+Task({ subagent_type: "lvv-researcher", prompt: "Enrich [ENTITY]..." })
+```
 
 ---
 

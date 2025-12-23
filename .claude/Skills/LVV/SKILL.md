@@ -37,6 +37,19 @@ AI-powered conference preparation and entity screening system for biotech/longev
 | **Deduplication** | "find duplicates", "merge entities", "check for matches" | `workflows/Deduplication.md` |
 | **ExportReporting** | "export results", "generate Excel", "create report" | `workflows/ExportReporting.md` |
 
+### Agent Integration
+
+| Agent | Trigger | Purpose |
+|-------|---------|---------|
+| **lvv-researcher** | Automatic (sparse entities), "enrich entity", "research for LVV" | Enriches sparse descriptions before screening |
+
+The `lvv-researcher` agent is automatically invoked by EntityScreening workflow when:
+- Entity description < 100 characters
+- Website is available
+- Not recently enriched
+
+Agent returns dimension-organized context for improved evaluation accuracy.
+
 ---
 
 ## Examples

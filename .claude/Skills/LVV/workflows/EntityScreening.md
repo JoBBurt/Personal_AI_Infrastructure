@@ -57,6 +57,53 @@ ON CONFLICT(entity_id, conference_id) DO UPDATE SET
 
 **Conference IDs:** 1 = JPM 2025, 2 = Biotech Showcase 2025
 
+### Step 1.5: Enrich Sparse Entity (Automatic)
+
+**Check if enrichment needed:**
+
+```sql
+SELECT id, name, entity_type, description, website,
+       LENGTH(COALESCE(description, '')) as desc_length
+FROM entities WHERE id = <entity_id>
+```
+
+**Trigger enrichment if ALL conditions are true:**
+- Description length < 100 characters
+- Website is available
+- Entity not enriched in last 7 days (check evaluation notes for "enriched")
+
+**Delegate to lvv-researcher agent:**
+
+```
+Task({
+  subagent_type: "lvv-researcher",
+  description: "Enrich [ENTITY_NAME] for screening [lvv-researcher-1]",
+  prompt: "Research [ENTITY_NAME] for LVV screening context.
+           Entity type: [company|investor]
+           Website: [WEBSITE]
+           Current description: [SPARSE_DESCRIPTION]
+
+           Gather enriched context on all dimensions.
+           Return structured enrichment JSON.",
+  model: "sonnet"
+})
+```
+
+**Use enrichment results:**
+- Pass `enrichment.dimension_context` to evaluation prompt as additional context
+- DO NOT update database description (enrichment is context only)
+- Note enrichment in evaluation reasoning
+
+**Skip enrichment with flag:**
+```bash
+lvv screen prescreen <id> --no-enrich
+```
+
+**Skip enrichment if:**
+- Description >= 100 characters (sufficient context)
+- No website available (can't research effectively)
+- User explicitly opts out
+
 ### Step 2: Check Existing Evaluation
 
 Look at search output for:
