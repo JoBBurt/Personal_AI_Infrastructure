@@ -145,10 +145,39 @@ Cache freshness: 30 days (free reuse), recommend re-eval after 180 days.
 
 ---
 
+## TypeScript Wrapper (PAI Integration)
+
+For programmatic access with History integration:
+
+```bash
+# JSON stats
+bun run ~/.claude/Skills/LVV/tools/LvvCli.ts stats
+
+# Query with filters
+bun run ~/.claude/Skills/LVV/tools/LvvCli.ts query --tier "Accept" --limit 10
+
+# Batch screen with auto History save
+bun run ~/.claude/Skills/LVV/tools/LvvCli.ts screen --conference "JPM 2025" --eval-type prescreen
+
+# View History entries
+bun run ~/.claude/Skills/LVV/tools/LvvCli.ts history
+```
+
+**Features:**
+- JSON output for all commands
+- Auto-saves batch results to `~/.claude/History/Execution/YYYY-MM/`
+- Observability notifications
+- Direct SQLite queries (faster than CLI)
+
+→ Full documentation: `tools/LvvCli.help.md`
+
+---
+
 ## Database & Configuration
 
 - **Database:** `~/.lvv/intelligence.db`
 - **Output:** `~/.lvv/output/`
+- **History:** `~/.claude/History/Execution/` (batch results)
 - **API Keys:** macOS Keychain (service: `LVV-Screening-Pipeline`)
 
 ---
