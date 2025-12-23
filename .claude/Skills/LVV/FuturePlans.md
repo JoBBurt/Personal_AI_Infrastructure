@@ -148,10 +148,60 @@ Significant - estimated 2-3 weeks following Observability patterns:
 
 ---
 
+## 3. Technical Documentation Diagrams
+
+**Problem:** LVV documentation lacks visual diagrams explaining architecture and workflows.
+
+**Solution:** Generate hand-drawn style diagrams using the Art skill.
+
+**Status:** Blocked - API credits/quotas needed
+
+### Required API Access
+
+One of the following must be available:
+- **Gemini (nano-banana-pro)**: Google AI quota
+- **Replicate (flux, nano-banana)**: Account credits
+- **OpenAI (gpt-image-1)**: Valid API key in `~/.claude/.env`
+
+### Diagrams to Generate
+
+| Diagram | Workflow | Output |
+|---------|----------|--------|
+| System Architecture | TechnicalDiagrams | `diagrams/system-architecture.png` |
+| Entity Screening Flow | Mermaid Flowchart | `diagrams/entity-screening-flow.png` |
+| Conference Prep Phases | Mermaid Flowchart | `diagrams/conference-prep-phases.png` |
+| Database Schema | Mermaid ER | `diagrams/database-schema.png` |
+| Scoring Dimensions | TechnicalDiagrams | `diagrams/scoring-dimensions.png` |
+
+### Quick Start Command
+
+When API is available, run:
+
+```bash
+# System Architecture
+bun run ~/.claude/Skills/art/tools/generate-ulart-image.ts \
+  --model nano-banana-pro \
+  --prompt "Hand-drawn technical diagram showing LVV Intelligence Platform. Components: User, Claude Code (purple, orchestration), Python CLI, TypeScript Wrapper, SQLite Database, Web Search (teal), History. Horizontal flow with teal arrows. Excalidraw whiteboard aesthetic." \
+  --size 2K --aspect-ratio 16:9 \
+  --output ~/.claude/Skills/LVV/diagrams/system-architecture.png
+```
+
+### Documentation Integration
+
+After generating diagrams, update:
+- `SKILL.md` with System Architecture
+- `workflows/EntityScreening.md` with Screening Flow
+- `workflows/ConferencePrep.md` with Prep Phases
+- `DatabaseSchema.md` with ER Diagram
+- `ScoringDimensions.md` with Scoring Visualization
+
+---
+
 ## Priority Order
 
 1. **Quick Web Enrichment** - Small effort, immediate value for sparse entities
-2. **Dashboard Visualization** - Large effort, high value for conference prep workflow
+2. **Technical Documentation Diagrams** - Blocked by API availability
+3. **Dashboard Visualization** - Large effort, high value for conference prep workflow
 
 ---
 
