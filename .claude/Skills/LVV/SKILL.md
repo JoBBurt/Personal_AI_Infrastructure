@@ -28,7 +28,9 @@ AI-powered conference preparation and entity screening system for biotech/longev
 | Workflow | Trigger | File |
 |----------|---------|------|
 | **ConferencePrep** | "prep for JPM", "prepare for conference", "get ready for ARDD" | `workflows/ConferencePrep.md` |
-| **EntityScreening** | "screen [entity]", "evaluate [company]", "check [investor]" | `workflows/EntityScreening.md` |
+| **EntityScreening** | "screen [entity]", "evaluate [company]" | `workflows/EntityScreening.md` |
+| **InvestorScreening** | "evaluate [investor]", "check [VC/fund]", "screen investor" | `workflows/InvestorScreening.md` |
+| **EmailIngest** | "process meeting requests", "batch ingest emails" | `workflows/EmailIngest.md` |
 | **BatchProcessing** | "screen all", "batch evaluate", "process all entities" | `workflows/BatchProcessing.md` |
 | **Deduplication** | "find duplicates", "merge entities", "check for matches" | `workflows/Deduplication.md` |
 | **ExportReporting** | "export results", "generate Excel", "create report" | `workflows/ExportReporting.md` |
@@ -142,6 +144,7 @@ Cache freshness: 30 days (free reuse), recommend re-eval after 180 days.
 | `PortfolioCompanies.md` | 24 LVV portfolio companies for co-investor detection |
 | `InvestmentThesis.md` | Stage, valuation, geographic, therapeutic preferences |
 | `DatabaseSchema.md` | SQLite schema, SQL examples, normalization rules |
+| `DeclineTemplates.md` | Standardized decline responses by rejection reason |
 
 ---
 

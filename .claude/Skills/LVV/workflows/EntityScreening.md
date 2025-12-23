@@ -14,6 +14,47 @@ lvv entity search "ENTITY_NAME"
 
 If multiple matches, present list and ask user to confirm.
 
+**If entity not found and this is a meeting request:**
+1. Add entity to database (see DatabaseSchema.md for SQL)
+2. Continue to Step 1b
+
+### Step 1b: Capture Contact (if meeting request)
+
+If the request includes contact information, store it:
+
+```sql
+INSERT INTO contacts (name, email, role, entity_id, is_key_contact, created_at, updated_at)
+VALUES (
+  'Contact Name',
+  'email@company.com',
+  'CEO/Founder/BD',
+  <entity_id>,
+  1,  -- is_key_contact
+  datetime('now'),
+  datetime('now')
+);
+```
+
+**Extract from meeting request:**
+- Name (usually in signature)
+- Email
+- Role/Title
+- Assistant info if mentioned
+
+### Step 1c: Log Meeting Request
+
+If this is an inbound meeting request, track it:
+
+```sql
+INSERT INTO attendance (entity_id, conference_id, meeting_requested, meeting_request_date)
+VALUES (<entity_id>, <conference_id>, 1, datetime('now'))
+ON CONFLICT(entity_id, conference_id) DO UPDATE SET
+  meeting_requested = 1,
+  meeting_request_date = datetime('now');
+```
+
+**Conference IDs:** 1 = JPM 2025, 2 = Biotech Showcase 2025
+
 ### Step 2: Check Existing Evaluation
 
 Look at search output for:
@@ -90,10 +131,21 @@ lvv screen full <entity_id>
 
 ### Step 7: Offer Next Steps
 
+**For Accept/Maybe tier:**
+- Schedule meeting (update attendance table)
 - Evaluate related entities (same conference, similar focus)
 - Export this evaluation
 - Compare with similar entities
-- Add notes or override score
+
+**For Pass tier:**
+- Generate decline response (see `DeclineTemplates.md`)
+- Common decline reasons:
+  - No geroscience fit
+  - Wrong stage (too early/late)
+  - Medical device (not therapeutic)
+  - Valuation concern
+  - Geographic mismatch
+- Add notes explaining decision
 
 ---
 
