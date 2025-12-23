@@ -77,6 +77,14 @@
         "--extension"
       ],
       "description": "Browser automation and testing using Playwright for visual debugging and web interaction"
+    },
+    "webflow": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://mcp.webflow.com/sse"
+      ],
+      "description": "Webflow Designer and Data API - create elements, styles, manage CMS content, and build pages programmatically. Requires Webflow MCP Bridge App running in Designer for canvas operations."
     }
   }
 }
