@@ -2,6 +2,8 @@
 
 **Trigger:** "Help me prep for [CONFERENCE]" or "Prepare for JPM 2025"
 
+![Conference Prep Phases](../diagrams/conference-prep-phases.png)
+
 ---
 
 ## Prerequisites

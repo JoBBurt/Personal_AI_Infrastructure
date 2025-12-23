@@ -2,6 +2,8 @@
 
 **Trigger:** "Screen [ENTITY]", "Evaluate [COMPANY]", "Check [INVESTOR]"
 
+![Entity Screening Flow](../diagrams/entity-screening-flow.png)
+
 ---
 
 ## Execution Steps

@@ -4,6 +4,8 @@ Complete database schema for the LVV Intelligence Platform.
 
 **Database Location:** `~/.lvv/intelligence.db` (SQLite)
 
+![Database Schema](diagrams/database-schema.png)
+
 ---
 
 ## Quick Reference: Adding Entities

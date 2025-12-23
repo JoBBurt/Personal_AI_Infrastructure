@@ -2,6 +2,8 @@
 
 Complete specification of evaluation criteria for companies and investors.
 
+![Scoring Dimensions](diagrams/scoring-dimensions.png)
+
 ---
 
 ## Company Scoring (8 Dimensions)

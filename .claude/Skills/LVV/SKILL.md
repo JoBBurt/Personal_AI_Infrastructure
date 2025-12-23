@@ -9,6 +9,8 @@ AI-powered conference preparation and entity screening system for biotech/longev
 
 **Architecture:** CLI-first with natural language orchestration via Claude Code.
 
+![System Architecture](diagrams/system-architecture.png)
+
 ---
 
 ## Workflow Routing
