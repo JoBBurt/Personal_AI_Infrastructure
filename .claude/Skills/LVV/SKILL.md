@@ -141,6 +141,7 @@ Cache freshness: 30 days (free reuse), recommend re-eval after 180 days.
 | `ScoringDimensions.md` | Full 8+5 dimension criteria, tier thresholds |
 | `PortfolioCompanies.md` | 24 LVV portfolio companies for co-investor detection |
 | `InvestmentThesis.md` | Stage, valuation, geographic, therapeutic preferences |
+| `DatabaseSchema.md` | SQLite schema, SQL examples, normalization rules |
 
 ---
 
