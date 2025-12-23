@@ -145,6 +145,7 @@ Cache freshness: 30 days (free reuse), recommend re-eval after 180 days.
 | `InvestmentThesis.md` | Stage, valuation, geographic, therapeutic preferences |
 | `DatabaseSchema.md` | SQLite schema, SQL examples, normalization rules |
 | `DeclineTemplates.md` | Standardized decline responses by rejection reason |
+| `FuturePlans.md` | Deferred improvements (web enrichment, dashboard) |
 
 ---
 
